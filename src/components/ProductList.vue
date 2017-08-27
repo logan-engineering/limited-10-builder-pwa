@@ -3,25 +3,24 @@
     <li v-for="p in products">
       {{ p.title }} - {{ p.price | currency }}
       <br>
-      <button
-        @click="addToCart(p)">
-        Add to cart
-      </button>
+      <option-list :options="p.options" :product="p"></option-list>
+      <product-list :products="p.variations"></product-list>
     </li>
   </ul>
 </template>
 
 <script>
-  import { mapGetters, mapActions } from 'vuex';
+  import OptionList from './OptionList.vue';
+
   export default {
-    computed: mapGetters({
-      products: 'allProducts'
-    }),
-    methods: mapActions([
-      'addToCart'
-    ]),
-    created () {
-      this.$store.dispatch('getAllProducts');
+    name: 'product-list',
+
+    components: {
+      OptionList
+    },
+
+    props: {
+      products: Array
     }
   };
 </script>

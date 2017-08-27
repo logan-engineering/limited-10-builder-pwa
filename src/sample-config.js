@@ -1,27 +1,27 @@
 export const products = [
   {
-    name: 'Caliber',
-    values: ['9mm', '.38 SC', '.40', '10mm', '.45'],
+    title: 'Caliber',
+    options: ['9mm', '.38 SC', '.40', '10mm', '.45'],
     default: '.40'
   },
   {
-    name: 'Top End Options',
+    title: 'Top End Options',
     variations: [
       {
-        name: 'Compensated',
+        title: 'Compensated',
         type: Boolean,
-        values: [true, false],
+        options: [true, false],
         default: true
       },
       {
-        name: 'Barrel Configuration',
-        values: ['Standard', '3/4" Tungsten Sleeve', '3/4" Bull Barrel', 'Bushing', 'Sightblock'],
+        title: 'Barrel Configuration',
+        options: ['Standard', '3/4" Tungsten Sleeve', '3/4" Bull Barrel', 'Bushing', 'Sightblock'],
         default: '3/4" Tungsten Sleeve'
       },
       {
-        name: 'Length',
+        title: 'Length',
         type: Number,
-        values: [4.25, 4.5, 5, 5.4, 6],
+        options: [4.25, 4.5, 5, 5.4, 6],
         default: 4.5,
         constraints: [
           {
@@ -55,9 +55,9 @@ export const products = [
         ]
       },
       {
-        name: 'w/ Popple Holes',
+        title: 'w/ Popple Holes',
         type: Boolean,
-        values: [true, false],
+        options: [true, false],
         default: true,
         constraints: [
           {
@@ -72,9 +72,9 @@ export const products = [
     ]
   },
   {
-    name: 'Performance Options',
+    title: 'Performance Options',
     multiSelect: true,
-    values: ['Stroked', 'Front Internal Lightening', 'Rear Internal Lightening'],
+    options: ['Stroked', 'Front Internal Lightening', 'Rear Internal Lightening'],
     default: ['Stroked', 'Rear Internal Lightening'],
     constraints: [
       {
@@ -87,53 +87,53 @@ export const products = [
     ]
   },
   {
-    name: 'Slide Options',
+    title: 'Slide Options',
     variations: [
       {
-        name: 'Slide Length',
+        title: 'Slide Length',
         hidden: true,
-        values: [4.25, 4.5, 5, 5.4, 6],
+        options: [4.25, 4.5, 5, 5.4, 6],
         master: 'Top End Options.Length'
       },
       {
-        name: 'Top',
-        values: ['Top', 'Flat Top', 'Tri-Top', 'Partial Tri-Top', 'Round', 'Signature'],
+        title: 'Top',
+        options: ['Top', 'Flat Top', 'Tri-Top', 'Partial Tri-Top', 'Round', 'Signature'],
         default: 'Signature'
       },
       {
-        name: 'Serrations',
-        values: ['4 LPI', '8 LPI', 'Signature'],
+        title: 'Serrations',
+        options: ['4 LPI', '8 LPI', 'Signature'],
         default: 'Signature'
       },
       {
-        name: 'Panel Cuts',
+        title: 'Panel Cuts',
         type: Boolean,
-        values: [true, false],
+        options: [true, false],
         default: true
       },
       {
-        name: 'Front Serrations',
-        values: ['Standard', 'Reverse High Power', 'Butler', 'High Power', '4 LPI', '8 LPI', 'Signature'],
+        title: 'Front Serrations',
+        options: ['Standard', 'Reverse High Power', 'Butler', 'High Power', '4 LPI', '8 LPI', 'Signature'],
         default: 'Signature'
       },
       {
-        name: 'Material',
-        values: ['Stainless', 'Carbon Steel'],
+        title: 'Material',
+        options: ['Stainless', 'Carbon Steel'],
         default: 'Carbon Steel'
       }
     ]
   },
   {
-    name: 'Frame Options',
+    title: 'Frame Options',
     variations: [
       {
-        name: 'Configuration',
-        values: ['Long Wide', 'Heavy Long Wide', 'Tactical'],
+        title: 'Configuration',
+        options: ['Long Wide', 'Heavy Long Wide', 'Tactical'],
         default: 'Heavy Long Wide'
       },
       {
-        name: 'Length',
-        values: ['Butler', 'Full', 'Standard'],
+        title: 'Length',
+        options: ['Butler', 'Full', 'Standard'],
         default: 'Full',
         constraints: [
           {
@@ -144,23 +144,23 @@ export const products = [
         ]
       },
       {
-        name: 'Material',
-        values: ['Steel', 'Stainless', 'Aluminum'],
+        title: 'Material',
+        options: ['Steel', 'Stainless', 'Aluminum'],
         default: 'Steel'
       }
     ]
   },
   {
-    name: 'Grip Options',
+    title: 'Grip Options',
     variations: [
       {
-        name: 'Material',
-        values: ['Steel', 'Stainless', 'Aluminum', 'Polymer'],
+        title: 'Material',
+        options: ['Steel', 'Stainless', 'Aluminum', 'Polymer'],
         default: 'Steel'
       },
       {
-        name: 'Length',
-        values: ['Full-Size', 'Compact'],
+        title: 'Length',
+        options: ['Full-Size', 'Compact'],
         default: 'Full-Size',
         constraints: [
           {
@@ -171,82 +171,82 @@ export const products = [
         ]
       },
       {
-        name: 'Grip Texture',
-        values: ['WarDrum Medium', 'WarDrum Velvet', 'Signature Aggressive', 'Signature Blank', 'Signature Medium'],
+        title: 'Grip Texture',
+        options: ['WarDrum Medium', 'WarDrum Velvet', 'Signature Aggressive', 'Signature Blank', 'Signature Medium'],
         default: 'Signature Blank'
       }
     ]
   },
   {
-    name: 'Magwell',
-    values: ['Competition', 'Compact', 'None'],
+    title: 'Magwell',
+    options: ['Competition', 'Compact', 'None'],
     default: 'Competition'
   },
   {
-    name: 'Thumb Safety',
+    title: 'Thumb Safety',
     variations: [
       {
-        name: 'Paddle',
+        title: 'Paddle',
         type: Array,
         variations: [
           {
-            name: 'Ambi',
+            title: 'Ambi',
             type: Boolean,
-            values: [true, false],
+            options: [true, false],
             default: true
           },
           {
-            name: 'Shield',
+            title: 'Shield',
             type: Boolean,
-            values: [true, false],
+            options: [true, false],
             default: true
           }
         ]
       },
       {
-        name: 'Width',
-        values: ['Wide', 'Extra Wide'],
+        title: 'Width',
+        options: ['Wide', 'Extra Wide'],
         default: 'Extra Wide'
       }
     ]
   },
   {
-    name: 'Sights',
-    values: ['Tritium Novak', 'Adjustable Bomar w/ Fiber Front', 'RTS2', 'RMR w/ Tritium'],
+    title: 'Sights',
+    options: ['Tritium Novak', 'Adjustable Bomar w/ Fiber Front', 'RTS2', 'RMR w/ Tritium'],
     default: 'Adjustable Bomar w/ Fiber Front'
   },
   {
-    name: 'Slide Racker',
+    title: 'Slide Racker',
     type: Boolean,
-    values: [true, false],
+    options: [true, false],
     default: false
   },
   {
-    name: 'Gas Pedal',
+    title: 'Gas Pedal',
     type: Boolean,
-    values: [true, false],
+    options: [true, false],
     default: false
   },
   {
-    name: 'Guide Rod',
-    values: ['FLGR', 'GI', 'Tungsten FLGR'],
+    title: 'Guide Rod',
+    options: ['FLGR', 'GI', 'Tungsten FLGR'],
     default: 'FLGR'
   },
   {
-    name: 'Trigger',
+    title: 'Trigger',
     variations: [
       {
-        name: 'Length',
-        values: ['Standard', 'Long', 'Short'],
+        title: 'Length',
+        options: ['Standard', 'Long', 'Short'],
         default: 'Standard'
       },
       {
-        name: 'Shape',
-        values: ['Flat', 'Curved'],
+        title: 'Shape',
+        options: ['Flat', 'Curved'],
         default: 'Flat'
       },
       {
-        name: 'Weight',
+        title: 'Weight',
         type: 'range',
         min: 2.0,
         max: 4.75,
@@ -256,19 +256,19 @@ export const products = [
     ]
   },
   {
-    name: 'Grip Safety Pinned',
+    title: 'Grip Safety Pinned',
     type: Boolean,
-    values: [true, false],
+    options: [true, false],
     default: false
   },
   {
-    name: 'Custom Serial',
-    type: '? Fill in your own'
+    title: 'Custom Serial',
+    type: 'textbox'
   }
 ];
 
 export const productMap = new Map();
-products.forEach(item => productMap.set(item.name, item));
+products.forEach(item => productMap.set(item.title, item));
 
 export const shopify = {
   client: {

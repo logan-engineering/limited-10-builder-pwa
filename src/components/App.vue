@@ -3,16 +3,20 @@
     <h1>Shopping Cart Example</h1>
     <hr>
     <h2>Products</h2>
-    <product-list></product-list>
+    <product-list-container></product-list-container>
     <hr>
     <cart></cart>
   </div>
 </template>
 
 <script>
-  import ProductList from './ProductList.vue';
+  import ProductListContainer from './ProductListContainer.vue';
   import Cart from './Cart.vue';
+
   export default {
-    components: { ProductList, Cart }
+    components: {
+      ProductListContainer,
+      Cart
+    }
   };
 </script>

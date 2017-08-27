@@ -6,13 +6,15 @@ export function configureProducts (config, products) {
       products.find(p => p.title === pConf.title)
     );
 
+    p.id = p.product_id;
+
     p.config = deepCopy(pConf);
 
     p.price = Number(p.variants[0].price);
 
     p.options = (p.config.options || []).map(createOption);
 
-    p.variations = (p.config.variations || []).map(createVariant);
+    p.variations = (p.config.variations || []).map(createVariant.bind(null, p));
 
     return p;
   });
@@ -20,8 +22,10 @@ export function configureProducts (config, products) {
 
 const createOption = v => ({value: v, enabled: true});
 
-const createVariant = (vConf) => {
+const createVariant = (product, vConf) => {
   const p = {};
+
+  p.parent = product;
 
   p.title = vConf.title;
 

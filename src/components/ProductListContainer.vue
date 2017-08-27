@@ -22,8 +22,9 @@
       'addToCart'
     ]),
 
-    created () {
-      this.$store.dispatch('getAllProducts');
+    async created () {
+      await this.$store.dispatch('getAllProducts');
+      this.$store.dispatch('addDefaultItemsToCart', this.allProducts);
     }
   };
 </script>

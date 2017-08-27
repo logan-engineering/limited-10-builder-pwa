@@ -1,10 +1,12 @@
 export const cartProducts = state => {
-  return state.cart.added.map(({ id, quantity }) => {
-    const product = state.products.all.find(p => p.id === id);
+  return state.cart.added.map((item) => {
+    // console.log('cartProducts getter', item);
+
     return {
-      title: product.title,
-      price: product.price,
-      quantity
     };
   });
+};
+
+export const cart = state => {
+  return state.cart.added;
 };

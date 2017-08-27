@@ -1,16 +1,4 @@
 /**
- * Get the first item that pass the test
- * by second argument function
- *
- * @param {Array} list
- * @param {Function} f
- * @return {*}
- */
-function find (list, f) {
-  return list.filter(f)[0];
-}
-
-/**
  * Deep copy the given object considering circular structure.
  * This function caches all nested objects and its copies.
  * If it detects circular structure, use cached copy to avoid infinite loop.
@@ -47,20 +35,13 @@ export function deepCopy (obj, cache = []) {
 }
 
 /**
- * forEach for object
+ * Get the first item that pass the test
+ * by second argument function
+ *
+ * @param {Array} list
+ * @param {Function} f
+ * @return {*}
  */
-export function forEachValue (obj, fn) {
-  Object.keys(obj).forEach(key => fn(obj[key], key));
-}
-
-export function isObject (obj) {
-  return obj !== null && typeof obj === 'object';
-}
-
-export function isPromise (val) {
-  return val && typeof val.then === 'function';
-}
-
-export function assert (condition, msg) {
-  if (!condition) throw new Error(`[vuex] ${msg}`);
+function find (list, f) {
+  return list.filter(f)[0];
 }

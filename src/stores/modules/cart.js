@@ -1,4 +1,5 @@
 import * as types from '../mutation-types';
+import { getFullProductTitle } from '../../services/cartUtil';
 
 export function createCart (shopifyClient) {
   // initial state
@@ -25,22 +26,27 @@ export function createCart (shopifyClient) {
 
   // mutations
   const mutations = {
-    [types.ADD_TO_CART] (state, {id}) {
+    [types.ADD_TO_CART] (state, item) {
       state.lastCheckout = null;
-      const record = state.added.find(p => p.id === id);
-      if (!record) {
-        state.added.push({
-          id,
-          quantity: 1
-        });
-      } else {
-        record.quantity++;
+
+      const title = getFullProductTitle(item.product);
+      const value = item.option;
+      const config = item.product.config;
+
+      let existing = state.added.find(p => p.title === title);
+      if (!existing) {
+        existing = {
+          title,
+          values: []
+        };
+        state.added.push(existing);
       }
+      setValue(existing, value, config);
     },
 
     [types.CHECKOUT_REQUEST] (state) {
       // clear cart
-      state.added = [];
+      state.added = {};
       state.checkoutStatus = null;
     },
 
@@ -61,4 +67,20 @@ export function createCart (shopifyClient) {
     actions,
     mutations
   };
+}
+
+function setValue(item, value, config) {
+  if (config.multiSelect) {
+    if (!item.values.includes(value)) {
+      item.values.push(value);
+    } else {
+      item.values.splice(item.values.indexOf(value), 1);
+    }
+  } else if (item.values.includes(value)) {
+    // Already added; do nothing.
+  } else if (item.values.length > 0) {
+    item.values.splice(0, 1, value);
+  } else {
+    item.values.push(value);
+  }
 }

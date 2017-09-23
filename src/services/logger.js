@@ -2,12 +2,18 @@
 
 import { deepCopy } from './util';
 
+let DO_LOG = false;
+
 export function createLogger ({
   collapsed = true,
   filter = (mutation, stateBefore, stateAfter) => true,
   transformer = state => state,
   mutationTransformer = mut => mut
 } = {}) {
+  if (!DO_LOG) {
+    return () => {};
+  }
+
   return store => {
     let prevState = deepCopy(store.state);
 

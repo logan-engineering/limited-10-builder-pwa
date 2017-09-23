@@ -14,11 +14,12 @@
 </template>
 
 <style lang="scss" scoped>
+  @import "../variables";
   .selected {
-    background: #f00;
+    background: $color-selected;
   }
   .disabled {
-    background: grey;
+    background: $color-disabled;
   }
 </style>
 

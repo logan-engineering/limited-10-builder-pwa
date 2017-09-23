@@ -16,7 +16,16 @@ export const products = [
       {
         title: 'Barrel Configuration',
         options: ['Standard', '3/4" Tungsten Sleeve', '3/4" Bull Barrel', 'Bushing', 'Sightblock'],
-        default: '3/4" Tungsten Sleeve'
+        default: '3/4" Tungsten Sleeve',
+        constraints: [
+          {
+            when: {
+              source: 'Top End Options.Compensated',
+              is: true
+            },
+            disable: ['Bushing', 'Sightblock']
+          }
+        ]
       },
       {
         title: 'Length',
@@ -29,7 +38,7 @@ export const products = [
               source: 'Top End Options.Compensated',
               is: true
             },
-            enableOnly: [4.5, 5]
+            enable: [4.5, 5]
           },
           {
             when: {
@@ -43,14 +52,14 @@ export const products = [
               source: 'Top End Options.Barrel Configuration',
               is: 'Bushing'
             },
-            enableOnly: [4.25, 5, 6]
+            enable: [4.25, 5, 6]
           },
           {
             when: {
               source: 'Top End Options.Barrel Configuration',
               is: 'Sightblock'
             },
-            enableOnly: [5, 5.4, 6]
+            enable: [5, 5.4, 6]
           }
         ]
       },
@@ -137,8 +146,10 @@ export const products = [
         default: 'Full',
         constraints: [
           {
-            when: 'Top End Options.Length',
-            greaterThan: 5,
+            when: {
+              source: 'Top End Options.Length',
+              greaterThan: 5
+            },
             disable: ['Full']
           }
         ]
@@ -164,9 +175,11 @@ export const products = [
         default: 'Full-Size',
         constraints: [
           {
-            when: 'Magwell',
-            is: 'Compact',
-            exclude: ['Competition']
+            when: {
+              source: 'Magwell',
+              in: ['Compact', 'None']
+            },
+            disable: ['Full-Size']
           }
         ]
       },

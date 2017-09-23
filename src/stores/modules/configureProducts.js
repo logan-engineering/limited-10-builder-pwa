@@ -1,7 +1,9 @@
 import { deepCopy } from '../../services/util';
 
 export function configureProducts (config, products) {
-  return config.products.map(pConf => {
+  const options = [];
+  const variations = [];
+  const all = config.products.map(pConf => {
     const p = deepCopy(
       products.find(p => p.title === pConf.title)
     );
@@ -12,17 +14,28 @@ export function configureProducts (config, products) {
 
     p.price = Number(p.variants[0].price);
 
-    p.options = (p.config.options || []).map(createOption);
+    p.options = (p.config.options || []).map(createOption.bind(null, p));
 
-    p.variations = (p.config.variations || []).map(createVariant.bind(null, p));
+    p.variations = (p.config.variations || []).map(createVariant.bind(null, options, variations, p));
+
+    // TODO: not sureh how useful/accurate product is here.
+    if (p.options.length) {
+      options.push(...p.options.map(o => ({product: p, option: o})));
+    }
+
+    if (p.variations.length) {
+      variations.push(...p.variations.map(v => ({product: p, variation: v})));
+    }
 
     return p;
   });
+
+  return {options, variations, all};
 }
 
-const createOption = v => ({value: v, enabled: true});
+const createOption = (p, v) => ({product: p, value: v, enabled: true});
 
-const createVariant = (product, vConf) => {
+const createVariant = (options, variations, product, vConf) => {
   const p = {};
 
   p.parent = product;
@@ -31,9 +44,17 @@ const createVariant = (product, vConf) => {
 
   p.config = vConf;
 
-  p.options = (p.config.options || []).map(createOption);
+  p.options = (p.config.options || []).map(createOption.bind(null, product));
 
-  p.variations = (p.config.variations || []).map(createVariant);
+  p.variations = (p.config.variations || []).map(createVariant.bind(null, options, variations, p));
+
+  if (p.options.length) {
+    options.push(...p.options.map(o => ({product: p, option: o})));
+  }
+
+  if (p.variations.length) {
+    variations.push(...p.variations.map(v => ({product: p, variation: v})));
+  }
 
   return p;
 };

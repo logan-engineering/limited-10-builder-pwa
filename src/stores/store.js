@@ -2,6 +2,7 @@ import Vuex from 'vuex';
 import * as actions from './actions';
 import * as getters from './getters';
 import {createProductStore} from './modules/products';
+import {createConstraintStore} from './modules/constraints';
 import {createCart} from './modules/cart';
 import { createLogger } from '../services/logger';
 
@@ -9,6 +10,7 @@ const debug = process.env.NODE_ENV !== 'production';
 
 export function createStore (config, shopifyClient) {
   const products = createProductStore(config, shopifyClient);
+  const constraints = createConstraintStore(config);
   const cart = createCart(shopifyClient);
 
   return new Vuex.Store({
@@ -16,7 +18,8 @@ export function createStore (config, shopifyClient) {
     getters,
     modules: {
       cart,
-      products
+      products,
+      constraints
     },
     strict: debug,
     plugins: debug ? [createLogger()] : []

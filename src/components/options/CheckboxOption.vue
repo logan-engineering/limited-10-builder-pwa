@@ -2,7 +2,7 @@
   <div @click="toggleCart"
       :class="{
           selected: selectedOption.value,
-          disabled: !selectedOption.enabled
+          disabled: isDisabled
         }">
       <span>
         {{product.title}}
@@ -11,11 +11,12 @@
 </template>
 
 <style lang="scss" scoped>
+  @import "../variables";
   .selected {
-    background: #f00;
+    background: $color-selected;
   }
   .disabled {
-    background: grey;
+    background: $color-disabled;
   }
 </style>
 
@@ -34,6 +35,9 @@
         const title = getFullProductTitle(this.product);
         const cartItem = this.cart.find(p => p.title === title);
         return cartItem ? cartItem.values[0] : this.options[0];
+      },
+      isDisabled () {
+        return !!this.options.find(o => !o.enabled);
       }
     },
     methods: {
@@ -42,7 +46,6 @@
       ]),
       toggleCart () {
         const option = this.options.find(o => o !== this.selectedOption);
-        console.log('toggle', option.value);
         this.addToCart({product: this.product, option});
       }
     }

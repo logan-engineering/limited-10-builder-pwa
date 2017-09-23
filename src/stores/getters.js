@@ -1,7 +1,5 @@
 export const cartProducts = state => {
   return state.cart.added.map((item) => {
-    // console.log('cartProducts getter', item);
-
     return {
     };
   });

@@ -2,12 +2,18 @@ import * as types from './mutation-types';
 import { getFullProductTitle } from '../services/cartUtil';
 
 export const addToCart = ({commit, dispatch, state}, item) => {
+  if (!item.option.enabled) {
+    console.log(item.product.title, 'is disabled; not adding to cart');
+    return;
+  }
+
   const title = getFullProductTitle(item.product);
   const lineItem = state.cart.added.find(i => i.title === title);
 
   if (item.product.config.multiSelect || !lineItem || !lineItem.values.includes(item.option)) {
     commit(types.ADD_TO_CART, item);
     dispatch('updateSyncdItems', {title, selection: item.option});
+    dispatch('enforceConstraints', item);
   }
 };
 
@@ -34,8 +40,6 @@ export const addDefaultItemsToCart = ({dispatch}, allProducts) => {
       } else {
         setValue(val);
       }
-      // } else {
-      //   console.warn(`Not setting default value for ${product.title} because none is configured`);
     }
 
     product.variations.forEach(addProduct);

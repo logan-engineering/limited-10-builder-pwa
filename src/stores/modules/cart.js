@@ -2,8 +2,6 @@ import * as types from '../mutation-types';
 import { getFullProductTitle } from '../../services/cartUtil';
 
 export function createCart (shopifyClient) {
-  // initial state
-  // shape: [{ id, quantity }]
   const state = {
     added: [],
     checkoutStatus: null

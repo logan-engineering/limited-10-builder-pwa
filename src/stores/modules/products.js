@@ -4,7 +4,9 @@ import * as types from '../mutation-types';
 export function createProductStore (config, shopifyClient) {
 // initial state
   const state = {
-    all: []
+    all: [],
+    options: [],
+    variations: []
   };
 
   // getters
@@ -17,18 +19,24 @@ export function createProductStore (config, shopifyClient) {
     async getAllProducts ({commit, dispatch}) {
       const products = await retrieveProducts(shopifyClient);
       commit(types.RECEIVE_PRODUCTS, {products});
+      dispatch('configureConstraints', {productState: state});
     }
   };
 
   // mutations
   const mutations = {
     [types.RECEIVE_PRODUCTS] (state, {products}) {
-      state.all = configureProducts(config, products);
-    }
+      const {options, variations, all} = configureProducts(config, products);
+      state.all = all;
+      state.variations = variations;
+      state.options = options;
+    },
 
-    // [types.ADD_TO_CART] (state, {id}) {
-    //   state.all.find(p => p.id === id).inventory--;
-    // }
+    [types.APPLY_CONSTRAINT] (state, {option, enabled}) {
+      const product = findProduct(state.options, option);
+      console.log('constrain', product.title, option.value, option.enabled, '=>', enabled);
+      option.enabled = enabled;
+    }
   };
 
   return {
@@ -37,6 +45,13 @@ export function createProductStore (config, shopifyClient) {
     actions,
     mutations
   };
+}
+
+function findProduct (optionMap, option) {
+  const i = optionMap.find(item => {
+    return item.option === option;
+  });
+  return i && i.product;
 }
 
 function retrieveProducts (client) {

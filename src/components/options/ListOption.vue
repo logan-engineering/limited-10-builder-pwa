@@ -1,25 +1,14 @@
 <template>
-  <ul>
-    <li v-for="option in options"
-        @click="addToCart({product, option})"
-        :class="{
-          selected: selections.includes(option),
-          disabled: !option.enabled
-        }">
-      <span>
-        {{option.value}}
-      </span>
-    </li>
-  </ul>
+  <div class="content" v-if="options.length > 0">
+    <a v-for="option in options" :disabled="!option.enabled" class="button" :class="{'is-success': selections.includes(option)}" @click="addToCart({product, option})">
+      {{option.value}}
+    </a>
+  </div>
 </template>
 
 <style lang="scss" scoped>
-  @import "../variables";
-  .selected {
-    background: $color-selected;
-  }
-  .disabled {
-    background: $color-disabled;
+  a {
+    margin-right: 5px;
   }
 </style>
 

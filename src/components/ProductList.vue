@@ -1,12 +1,24 @@
 <template>
-  <ul>
-    <li v-for="p in products">
-      {{ p.title }} - {{ p.price | currency }}
-      <br>
-      <option-list :options="p.options" :product="p"></option-list>
-      <product-list :products="p.variations"></product-list>
-    </li>
-  </ul>
+  <div v-if="isVisible()" class="column" style="display: flex; flex-wrap: wrap;">
+    <div class="content" v-for="p in products">
+      <div v-if="hasChildren(p)" class="box">
+        <component :is="level">
+          {{ p.title }} - {{ p.price | currency }}
+        </component>
+        <product-list :products="p.variations"></product-list>
+      </div>
+
+      <div v-if="hasOptions(p)" class="panel">
+        <div class="panel-heading">
+            {{ p.title }} - {{ p.price | currency }}
+        </div>
+        <div class="panel-block">
+          <option-list :options="p.options" :product="p"></option-list>
+        </div>
+      </div>
+
+    </div>
+  </div>
 </template>
 
 <script>
@@ -21,6 +33,33 @@
 
     props: {
       products: Array
+    },
+
+    data () {
+      return {
+        level: getLevel(this.products[0])
+      };
+    },
+
+    methods: {
+      isVisible () {
+        return this.products.length > 0;
+      },
+      hasOptions(product) {
+        return product.options.length > 0;
+      },
+      hasChildren(product) {
+        return product.variations.length > 0;
+      }
     }
   };
+
+  function getLevel (product) {
+    let level = 2;
+    while (product) {
+      level++;
+      product = product.parent;
+    }
+    return `h${level}`;
+  }
 </script>

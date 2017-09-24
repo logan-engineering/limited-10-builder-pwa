@@ -1,13 +1,7 @@
 <template>
-  <div @click="toggleCart"
-      :class="{
-          selected: selectedOption.value,
-          disabled: isDisabled
-        }">
-      <span>
-        {{product.title}}
-      </span>
-  </div>
+  <a :disabled="isDisabled" class="button" :class="{'is-success': selectedOption.value}" @click="toggleCart">
+    {{product.title}}
+  </a>
 </template>
 
 <style lang="scss" scoped>

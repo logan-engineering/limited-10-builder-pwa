@@ -1,4 +1,4 @@
-import { findCartItem } from './modules/cart';
+import { findCartItem, addProduct } from './modules/cart';
 import * as types from './mutation-types';
 
 let constraints = [];
@@ -14,7 +14,7 @@ export const actions = {
     });
   },
 
-  cleanupCart ({state}, option) {
+  cleanupCart ({state, dispatch}, option) {
     if (option.enabled) {
       console.warn('option is enabled; nothing changing. Should not be here');
       return;
@@ -22,29 +22,17 @@ export const actions = {
     const {existing} = findCartItem(option.product, state.cart);
     const found = existing && existing.values.find(i => i.value === option.value);
     if (found) {
-      console.log('cart,found', existing, found);
-      // TODO: This vvv
-      // if is boolean, set false
-      // if is multi select, remove
-      // if is single select, change
+      addProduct(dispatch, found.product);
     }
   }
 };
 
 export const mutations = {
   [types.APPLY_CONSTRAINT] (state, {option, enabled}) {
-    // console.log('constrain', option.product.title, option.value, option.enabled, '=>', enabled);
     option.enabled = enabled;
   }
 };
-/*
-function findProduct (optionMap, option) {
-  const i = optionMap.find(item => {
-    return item.option === option;
-  });
-  return i && i.product;
-}
-*/
+
 function createConstraints ({all, variations, options}) {
   const constraints = [];
   variations
@@ -87,11 +75,11 @@ function createConstraint (self, allProducts, rule) {
 
   return {
     // BEGIN for debug only
-    title: self.title,
-    peer: peer.title,
-    get isActive () {
-      return isActive;
-    },
+    // title: self.title,
+    // peer: peer.title,
+    // get isActive () {
+    //   return isActive;
+    // },
     // END for debug only
     onchange (vuex, {product, option}) {
       if (product !== peer) {

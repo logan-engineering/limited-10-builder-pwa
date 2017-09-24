@@ -1,5 +1,6 @@
 import * as types from '../mutation-types';
 import { getFullProductTitle } from '../../services/cartUtil';
+import { getDefaultEnabledValues } from './products';
 
 export function createCart (shopifyClient) {
   const state = {
@@ -7,12 +8,10 @@ export function createCart (shopifyClient) {
     checkoutStatus: null
   };
 
-  // getters
   const getters = {
     checkoutStatus: state => state.checkoutStatus
   };
 
-  // actions
   const actions = {
     checkout ({commit, state}, products) {
       commit(types.CHECKOUT_REQUEST);
@@ -22,7 +21,6 @@ export function createCart (shopifyClient) {
     }
   };
 
-  // mutations
   const mutations = {
     [types.ADD_TO_CART] (state, item) {
       state.lastCheckout = null;
@@ -73,7 +71,7 @@ export function findCartItem(product, state) {
   return {title, existing};
 }
 
-function setValue(item, value, config) {
+export function setValue(item, value, config) {
   if (config.multiSelect) {
     if (!item.values.includes(value)) {
       item.values.push(value);
@@ -86,5 +84,21 @@ function setValue(item, value, config) {
     item.values.splice(0, 1, value);
   } else {
     item.values.push(value);
+  }
+}
+
+export function addProduct (dispatch, product) {
+  const enabledValues = getDefaultEnabledValues(product);
+  if (enabledValues.length === 0 && product.options.length > 0) {
+    console.warn(`Could not set default value on product ${product.title}. The requested value does not exist.`);
+  } else {
+    enabledValues.forEach(setValue);
+  }
+
+  function setValue (option) {
+    dispatch('addToCart', {
+      product,
+      option
+    });
   }
 }

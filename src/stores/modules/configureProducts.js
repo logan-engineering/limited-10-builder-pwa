@@ -26,6 +26,9 @@ export function configureProducts (config, products) {
       variations.push(...p.variations.map(v => ({product: p, variation: v})));
     }
 
+    // All products are variations. Or is it vice versa? Or both?
+    variations.push({product: null, variation: p});
+
     return p;
   });
 

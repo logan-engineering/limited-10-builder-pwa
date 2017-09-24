@@ -1,7 +1,9 @@
 import * as types from './mutation-types';
 import { getFullProductTitle } from '../services/cartUtil';
+import { addProduct } from './modules/cart';
 
-import {actions} from './constraints';
+import { actions } from './constraints';
+
 export const configureConstraints = actions.configureConstraints;
 export const enforceConstraints = actions.enforceConstraints;
 export const cleanupCart = actions.cleanupCart;
@@ -33,31 +35,8 @@ export const updateSyncdItems = ({dispatch, state}, {title, selection}) => {
   }
 };
 
-export const addDefaultItemsToCart = ({dispatch}, allProducts) => {
-  allProducts.forEach(addProduct);
-
-  function addProduct (product) {
-    const val = product.config.default;
-    if (val) {
-      if (Array.isArray(val)) {
-        val.forEach(setValue);
-      } else {
-        setValue(val);
-      }
-    }
-
-    product.variations.forEach(addProduct);
-
-    function setValue (val) {
-      const option = product.options.find(o => o.value === val);
-      if (!option) {
-        console.warn(`Could not set default value of ${val} on product ${product.title}. The requested value does not exist.`);
-        return;
-      }
-      dispatch('addToCart', {
-        product,
-        option
-      });
-    }
-  }
+export const addDefaultItemsToCart = ({dispatch, state}) => {
+  state.products.variations.forEach(item => {
+    addProduct(dispatch, item.variation);
+  });
 };

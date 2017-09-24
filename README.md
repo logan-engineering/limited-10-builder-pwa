@@ -1,5 +1,7 @@
 # l10-pwa
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/logan-engineering/limited-10-builder-pwa.svg)](https://greenkeeper.io/)
+
 > Jiggas BadAss Gun Builder
 
 ## Build Setup

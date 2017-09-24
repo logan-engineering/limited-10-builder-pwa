@@ -89,9 +89,9 @@ export const products = [
       {
         when: {
           source: 'Top End Options.Barrel Configuration',
-          in: ['3/4" Tungsten Sleeve`, `3/4" Bull Barrel']
+          in: ['3/4" Tungsten Sleeve', '3/4" Bull Barrel']
         },
-        disable: ['Front Internal Lightening', 'Rear Internal Lightening']
+        disable: ['Front Internal Lightening']
       }
     ]
   },
@@ -173,6 +173,8 @@ export const products = [
         title: 'Length',
         options: ['Full-Size', 'Compact'],
         default: 'Full-Size',
+        // I'm not entirely sure how to interpret the magwell/grip length constraints Is it basically, "when length
+        // is full-size, disable compact, and when it's compact, disable full-size?"
         constraints: [
           {
             when: {

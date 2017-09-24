@@ -27,11 +27,11 @@ export function createCart (shopifyClient) {
     [types.ADD_TO_CART] (state, item) {
       state.lastCheckout = null;
 
-      const title = getFullProductTitle(item.product);
       const value = item.option;
       const config = item.product.config;
 
-      let existing = state.added.find(p => p.title === title);
+      let {title, existing} = findCartItem(item.product, state);
+
       if (!existing) {
         existing = {
           title,
@@ -65,6 +65,12 @@ export function createCart (shopifyClient) {
     actions,
     mutations
   };
+}
+
+export function findCartItem(product, state) {
+  const title = getFullProductTitle(product);
+  const existing = state.added.find(p => p.title === title);
+  return {title, existing};
 }
 
 function setValue(item, value, config) {

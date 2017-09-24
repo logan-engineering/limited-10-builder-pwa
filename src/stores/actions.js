@@ -4,6 +4,7 @@ import { getFullProductTitle } from '../services/cartUtil';
 import {actions} from './constraints';
 export const configureConstraints = actions.configureConstraints;
 export const enforceConstraints = actions.enforceConstraints;
+export const cleanupCart = actions.cleanupCart;
 
 export const addToCart = ({commit, dispatch, state}, item) => {
   if (!item.option.enabled) {

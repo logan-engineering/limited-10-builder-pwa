@@ -18,7 +18,6 @@ export function configureProducts (config, products) {
 
     p.variations = (p.config.variations || []).map(createVariant.bind(null, options, variations, p));
 
-    // TODO: not sureh how useful/accurate product is here.
     if (p.options.length) {
       options.push(...p.options.map(o => ({product: p, option: o})));
     }
@@ -44,7 +43,7 @@ const createVariant = (options, variations, product, vConf) => {
 
   p.config = vConf;
 
-  p.options = (p.config.options || []).map(createOption.bind(null, product));
+  p.options = (p.config.options || []).map(createOption.bind(null, p));
 
   p.variations = (p.config.variations || []).map(createVariant.bind(null, options, variations, p));
 

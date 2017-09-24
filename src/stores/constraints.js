@@ -1,35 +1,32 @@
-import * as types from '../mutation-types';
+import * as types from './mutation-types';
 
-export function createConstraintStore () {
-  const state = {
-    constraints: []
-  };
+let constraints = [];
 
-  // actions
-  const actions = {
-    async configureConstraints ({commit}, {productState}) {
-      commit(types.CONFIGURE_CONSTRAINTS, productState);
-    },
+export const actions = {
+  configureConstraints ({state}) {
+    constraints = createConstraints(state.products);
+  },
 
-    enforceConstraints ({commit, state}, item) {
-      state.constraints.forEach(c => {
-        c.onchange({commit}, item);
-      });
-    }
-  };
+  enforceConstraints ({commit, state}, item) {
+    constraints.forEach(c => {
+      c.onchange({commit}, item);
+    });
+  }
+};
 
-  // mutations
-  const mutations = {
-    [types.CONFIGURE_CONSTRAINTS] (state, args) {
-      state.constraints = createConstraints(args);
-    }
-  };
+export const mutations = {
+  [types.APPLY_CONSTRAINT] (state, {option, enabled}) {
+    const product = findProduct(state.products.options, option);
+    console.log('constrain', product.title, option.value, option.enabled, '=>', enabled);
+    option.enabled = enabled;
+  }
+};
 
-  return {
-    state,
-    actions,
-    mutations
-  };
+function findProduct (optionMap, option) {
+  const i = optionMap.find(item => {
+    return item.option === option;
+  });
+  return i && i.product;
 }
 
 function createConstraints ({all, variations, options}) {
@@ -44,11 +41,12 @@ function createConstraints ({all, variations, options}) {
   return constraints;
 }
 
-function createConstraint(self, allProducts, rule) {
+function createConstraint (self, allProducts, rule) {
   const peer = findPeer(allProducts, rule.when.source);
   const targets = findTargets(self.options, rule);
   const shouldEnforce = createCheckFn(rule.when);
   let isActive = false;
+
   function enforce (commit) {
     if (isActive) {
       return;
@@ -58,6 +56,7 @@ function createConstraint(self, allProducts, rule) {
     });
     isActive = true;
   }
+
   function free (commit) {
     if (!isActive) {
       return;
@@ -69,11 +68,13 @@ function createConstraint(self, allProducts, rule) {
   }
 
   return {
+    // BEGIN for debug only
     title: self.title,
     peer: peer.title,
     get isActive () {
       return isActive;
     },
+    // END for debug only
     onchange ({commit}, {product, option}) {
       if (product !== peer) {
         return;

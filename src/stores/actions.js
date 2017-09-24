@@ -1,9 +1,12 @@
 import * as types from './mutation-types';
 import { getFullProductTitle } from '../services/cartUtil';
 
+import {actions} from './constraints';
+export const configureConstraints = actions.configureConstraints;
+export const enforceConstraints = actions.enforceConstraints;
+
 export const addToCart = ({commit, dispatch, state}, item) => {
   if (!item.option.enabled) {
-    console.log(item.product.title, 'is disabled; not adding to cart');
     return;
   }
 

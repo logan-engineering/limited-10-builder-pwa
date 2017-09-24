@@ -30,12 +30,6 @@ export function createProductStore (config, shopifyClient) {
       state.all = all;
       state.variations = variations;
       state.options = options;
-    },
-
-    [types.APPLY_CONSTRAINT] (state, {option, enabled}) {
-      const product = findProduct(state.options, option);
-      console.log('constrain', product.title, option.value, option.enabled, '=>', enabled);
-      option.enabled = enabled;
     }
   };
 
@@ -45,13 +39,6 @@ export function createProductStore (config, shopifyClient) {
     actions,
     mutations
   };
-}
-
-function findProduct (optionMap, option) {
-  const i = optionMap.find(item => {
-    return item.option === option;
-  });
-  return i && i.product;
 }
 
 function retrieveProducts (client) {

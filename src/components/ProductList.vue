@@ -1,6 +1,6 @@
 <template>
-  <div v-if="isVisible()" class="column" style="display: flex; flex-wrap: wrap;">
-    <div class="content" v-for="p in products">
+  <div v-if="isVisible()">
+    <div class="content" v-for="p in products" style="display: flex;">
       <div v-if="hasChildren(p)" class="box">
         <component :is="level">
           {{ p.title }} - {{ p.price | currency }}

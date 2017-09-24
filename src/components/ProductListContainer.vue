@@ -1,5 +1,5 @@
 <template>
-    <product-list :products="allProducts"></product-list>
+    <product-list :products="allProducts" style="display: flex; flex-wrap: wrap;"></product-list>
 </template>
 
 <style lang="scss" scoped>

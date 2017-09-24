@@ -1,8 +1,8 @@
 <template>
   <section class="section">
-    <h1>Shopping Cart Example</h1>
+    <h1>Gun Builder Constraint Checker</h1>
     <div id="app" class="content">
-      <h2>Products</h2>
+      <h2>Select Options</h2>
       <product-list-container></product-list-container>
 
       <!--

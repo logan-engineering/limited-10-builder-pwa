@@ -2,7 +2,7 @@
   "name": "l10-pwa",
   "version": "1.0.0",
   "description": "Jiggas BadAss Gun Builder",
-  "author": "cChris Camaratta <chris.camaratta@hotmail.com>",
+  "author": "Chris Camaratta <chris.camaratta@hotmail.com>",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
@@ -10,7 +10,8 @@
     "build": "node build/build.js",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "test": "npm run unit",
-    "lint": "eslint --ext .js,.vue src test/unit/specs"
+    "lint": "eslint --ext .js,.vue src test/unit/specs",
+    "stp": "git subtree push --prefix dist origin heroku"
   },
   "dependencies": {
     "bulma": "^0.5.3",
